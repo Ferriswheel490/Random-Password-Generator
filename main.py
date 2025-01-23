@@ -15,6 +15,4 @@ def main():
         do_you_want_upper__lower_or_both = input("do you want upper, lower, or both:")
     else:
         print("they need both")
-    special_charaters = input()
-def running():
-    pass
+    special_charaters = input("special charaters:")    
