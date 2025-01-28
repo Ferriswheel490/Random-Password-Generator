@@ -5,36 +5,66 @@
 A function for password
 like how long it should be
 letters in lower and uppercase
-numbers and special charaters
+numbers and special characters
 '''''
-def first_step(how_long):
-    how_long = input('how long is your password:')
+import random
+import string
 
+# Function to see how long the user wants the password to be
+def first_step():
+    how_long = int(input('How long is your password? '))
+    return how_long
 
-def letters(y,n, upper_letters, lower_letters, lower_upper):
-    does_it_need_letters = input("does it need letters:")
-    y = input("yes")
-    if does_it_need_letters == True:
-        do_you_want_upper__lower_or_both = input("do you want uppercase, lowercase, or both:")
-        if upper_letters == upper_letters:
-            print("ok")
-        
-        elif lower_letters == lower_letters:
-            print("ok")
-        
-        elif lower_upper == lower_upper:
-            print("it'll have both upper and lower case")
-        
-        elif n == n:
-            print("it might not be strong")
-        
-        else:
-            print("it might not be stong but do what you want")
-            
+# Function to see if the user wants letters in their password
+def letters():
+    upper_letters = input("Does it need uppercase letters? (yes/no) ").strip().lower() == 'yes'
+    lower_letters = input("Does it need lowercase letters? (yes/no) ").strip().lower() == 'yes'
+    return upper_letters, lower_letters
 
-def special_chataters(special_charaters, yes, no):
-    special_charaters = input("do you want special charaters:")
-    if special_charaters == yes:
-        print("It'll have special charaters")
-    else:
-        print("that is not an option")
+# Function to ask the user if they want to use special characters
+def special_characters():
+    special_characters = input("Do you want special characters? (yes/no) ").strip().lower() == 'yes'
+    return special_characters
+
+# Function to ask the user if they want to use numbers
+def numbers():
+    numbers = input("Do you want numbers? (yes/no) ").strip().lower() == 'yes'
+    return numbers
+
+# Function to generate the password
+def generate_password(how_long, upper_letters, lower_letters, special_characters, numbers):
+    all_characters = ''
+    if upper_letters:
+        all_characters += string.ascii_uppercase
+    if lower_letters:
+        all_characters += string.ascii_lowercase
+    if special_characters:
+        all_characters += string.punctuation
+    if numbers:
+        all_characters += string.digits
+
+    if not all_characters:
+        return None
+
+    password = ''.join(random.choice(all_characters) for _ in range(how_long))
+    return password
+
+# Fully run the code
+def main():
+    how_long = first_step()
+    upper_letters, lower_letters = letters()
+    special_characters_flag = special_characters()
+    numbers_flag = numbers()
+
+    password_list = []
+    while len(password_list) < 4:
+        password = generate_password(how_long, upper_letters, lower_letters, special_characters_flag, numbers_flag)
+        if password:
+            password_list.append(password)
+
+    print("\nGenerated Passwords:")
+    for password in password_list:
+        print(password)
+
+if __name__ == "__main__":
+    main()
